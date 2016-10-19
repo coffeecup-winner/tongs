@@ -9,5 +9,10 @@ namespace Tongs
         {
             return FileDataSource.CreateFromDirectory(directory, pattern, recursively);
         }
+
+        public static IEnumerable<string> Lines(string filepath, bool ignoreEmptyLines = true)
+        {
+            return StringDataSource.CreateFromFile(filepath);
+        }
     }
 }
