@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -36,10 +37,33 @@ namespace Tongs.DataSource
     public class File
     {
         private readonly string path;
+        private readonly Lazy<FileInfo> fileInfo;
 
         internal File(string path)
         {
             this.path = path;
+            fileInfo = new Lazy<FileInfo>(() => new FileInfo(path));
+        }
+
+        public string Path => path;
+        public string Name => System.IO.Path.GetFileName(Path);
+        public string Extension => System.IO.Path.GetExtension(Path);
+        public string DirectoryPath => System.IO.Path.GetDirectoryName(Path);
+        public string DirectoryName => System.IO.Path.GetFileName(DirectoryPath);
+        public bool Exists() => System.IO.File.Exists(Path);
+        public long Size => fileInfo.Value.Length;
+        public DateTime CreationTime => fileInfo.Value.CreationTime;
+        public DateTime CreationTimeUtc => fileInfo.Value.CreationTimeUtc;
+        public DateTime LastAccessTime => fileInfo.Value.LastAccessTime;
+        public DateTime LastAccessTimeUtc => fileInfo.Value.LastAccessTimeUtc;
+        public DateTime LastWriteTime => fileInfo.Value.LastWriteTime;
+        public DateTime LastWriteTimeUtc => fileInfo.Value.LastWriteTimeUtc;
+        public bool IsReadOnly => fileInfo.Value.Attributes.HasFlag(FileAttributes.ReadOnly);
+
+        public bool Contains(string str)
+        {
+            // TODO: rewrite for better performance
+            return System.IO.File.ReadAllText(path).Contains(str);
         }
 
         public override string ToString()
