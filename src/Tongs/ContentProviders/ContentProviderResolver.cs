@@ -11,6 +11,7 @@ namespace Tongs.ContentProviders
         public ContentProviderResolver()
         {
             providers = new List<IContentProvider> {
+                new HttpContentProvider(),
                 new FileContentProvider()
             };
         }
