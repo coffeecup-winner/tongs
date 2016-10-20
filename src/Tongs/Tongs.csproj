@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleOutputExtensions.cs" />
+    <Compile Include="ContentProviders\ContentProvider.cs" />
+    <Compile Include="ContentProviders\FileContentProvider.cs" />
+    <Compile Include="ContentProviders\IContentProvider.cs" />
     <Compile Include="Cube.cs" />
     <Compile Include="DataSource\FileDataSource.cs" />
     <Compile Include="DataSource\StringDataSource.cs" />

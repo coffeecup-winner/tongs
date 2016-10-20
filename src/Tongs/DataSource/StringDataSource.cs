@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Tongs.ContentProviders;
 
 namespace Tongs.DataSource
 {
@@ -23,9 +25,10 @@ namespace Tongs.DataSource
             return GetEnumerator();
         }
 
-        public static StringDataSource CreateFromFile(string filepath, bool ignoreEmptyLines = true)
+        public static StringDataSource CreateFrom(string location, IContentProvider provider, bool ignoreEmptyLines = true)
         {
-            return new StringDataSource(System.IO.File.ReadAllLines(filepath).Where(l => l != string.Empty));
+            return new StringDataSource(provider.GetContent(location)
+                .Split(new[] { "\r", "\n" }, ignoreEmptyLines ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None));
         }
     }
 }
